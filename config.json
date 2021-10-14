@@ -1,0 +1,20 @@
+{
+    "app": {
+        "app_name": "customer-restapi",
+        "port": ":9000"
+    },
+    "mysqldb": {
+        "driver": "mysql",
+        "host": "127.0.0.1",
+        "db_name": "",
+        "timeout": 60,
+        "dial_timeout": 20,
+        "username": "root",
+        "password": "",
+        "max_idle_conns": 10,
+        "max_open_conns_int": 500,
+        "max_life_timeout": 60,
+        "ssl_mode": "disable",
+        "uri": ""
+    }
+}

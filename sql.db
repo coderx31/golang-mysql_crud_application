@@ -1,0 +1,106 @@
+/* REMEMBER SEMICOLON IS MUST IN DATABASE QUERIES !!!!!*/
+
+
+// creating database - restuarant
+
+CREATE DATABASE restuarant;
+
+// select database
+
+USE restuarant;
+
+
+// create tables
+
+CREATE TABLE address (
+    address_id varchar(10),
+    no varchar(10) NOT NULL,
+    street_line_1 varchar(50) NOT NULL,
+    street_line_2 varchar(50),
+    city varchar(50) NOT NULL,
+    state varchar(50) NOT NULL,
+    country varchar(50) NOT NULL,
+    zip varchar(50) NOT NULL,
+    type varchar(10) NOT NULL,
+    constraint a_aid_pk PRIMARY KEY(address_id)
+);
+
+CREATE TABLE customer (
+    customer_id varchar(10),
+    firstname varchar(50) NOT NULL,
+    lastname varchar(50) NOT NULL,
+    mobile varchar(20) UNIQUE NOT NULL,
+    email varchar(50) UNIQUE NOT NULL,
+    address_id varchar(10) NOT NULL,
+    constraint c_cid_pk PRIMARY KEY(customer_id),
+    constraint c_aid_fk FOREIGN KEY(address_id) references address(address_id)
+);
+
+CREATE TABLE food (
+    food_id varchar(10),
+    food_name varchar(50) NOT NULL,
+    short_desc varchar(100) NOT NULL,
+    long_desc varchar(255) NOT NULL,
+    price FLOAT(5,2) NOT NULL,
+    is_availability int(1) NOT NULL,
+    constraint f_fid_pk PRIMARY KEY(food_id)
+);
+
+// insert data into tables
+
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS001", "226", "Angampitiya East", "Bolawatte", "Waikkala", "North Western", "Sri Lanka", "61110", "customer");
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS002", "224", "College Rd", "Veyangoda", "Veyangoda", "Western", "Sri Lanka", "11000", "customer");
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS003", "225", "School street", "Malimbada", "Kekanadura", "Sourthern", "Sri Lanka", "81000", "customer");
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS004", "220", "Karavitagara", "Chilaw", "Chilaw", "North Western", "Sri Lanka", "61000", "customer");
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS005", "210", "Galewela", "Dambulla", "Waikkala", "North Western", "Sri Lanka", "21200", "supplier");
+INSERT INTO address  (address_id, no, street_line_1, street_line_2, city, state, country, zip, type) VALUES ("ADS006", "222", "Weliweriya", "Gampaha", "Gampaha", "Western", "Sri Lanka", "11000", "supplier");
+
+
+
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST001", "Shenal", "Fernando", "0778183950", "shenal.fernando10@gmail.com", "ADS001");
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST002", "Pamudu", "Prabathiya", "0768517933", "pamudu@gmail.com", "ADS002");
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST003", "Vajith", "Chamuditha", "0779686823", "vajith@gmail.com", "ADS003");
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST004", "Pasan", "Jayasinghe", "0766106561", "pasan@gmail.com", "ADS004");
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST005", "Ruchira", "Nishan", "0763214507", "ruchira@gmail.com", "ADS005");
+INSERT INTO customer (customer_id, firstname, lastname, mobile, email, address_id) VALUES ("CST006", "Tharindu", "Dilshan", "0768660292", "tharindu@gmail.com", "ADS006");
+
+
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD001", "Seafood Pasta", "some short description", "some long description", 2000, 1);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD002", "Seafood Marinator", "some short description", "some long description", 2500, 1);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD003", "Tom Yum Soup", "some short description", "some long description", 650, 1);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD004", "Fish Soup", "some short description", "some long description", 400, 0);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD005", "Pumpking Soup", "some short description", "some long description", 400, 0);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD006", "Rice and Curry", "some short description", "some long description", 1600, 0);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD007", "Beef Curry", "some short description", "some long description", 600, 0);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD008", "Beef Steak", "some short description", "some long description", 1500, 0);
+INSERT INTO food (food_id, food_name, short_desc, long_desc, price, is_availability) VALUES ("FOD009", "Mix Salad", "some short description", "some long description", 600, 1);
+
+
+// ALTER TABLE food MODIFY price int(10);
+
+
+// get customers
+
+SELECT c.customer_id AS customer_id, c.firstname AS firstname, c.lastname AS lastname, c.mobile AS mobile, c.email AS email, a.address_id AS address_id,
+a.no AS no, a.street_line_1 AS street_line_1, a.street_line_2 AS street_line_2, a.city AS city, a.state AS state, a.country AS country, a.zip AS zip, a.type AS type
+FROM customer c join address a
+on (c.address_id = a.address_id);
+
+
+// get customer by id 
+
+SELECT c.customer_id AS customer_id, c.firstname AS firstname, c.lastname AS lastname, c.mobile AS mobile, c.email AS email, a.address_id AS address_id,
+	a.no AS no, a.street_line_1 AS street_line_1, a.street_line_2 AS street_line_2, a.city AS city, a.state AS state, a.country AS country, a.zip AS zip, a.type AS type
+	FROM customer c join address a
+	on (c.address_id = a.address_id)
+    WHERE c.customer_id = 'CST002';
+
+
+
+UPDATE customer
+SET 
+firstname = 
+lastname = 
+WHERE customer_id = 
+
+DELETE FROM customer WHERE customer_id =  
